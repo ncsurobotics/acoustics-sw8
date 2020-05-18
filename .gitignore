@@ -1,3 +1,5 @@
 *.net
 *.raw
 *.log
+__pycache__
+*.pyc
