@@ -3,6 +3,9 @@ import numpy as np
 class ConicApproximation(TDOASim):
     # Assumptions: Three hydrophones forming a right angle in the xz plane
     # Hydrophones 1 and 2 form the horizontal pair, and 2 and 3 form the vertical
+
+    # Note - does not differentiate between directions
+    # Can be improved by adding a fourth hydrophone and averaging
     def calculate_bearing(self, pinger_loc):
         relative_toas = self.calc_tdoas(pinger_loc)
         dx = np.linalg.norm(self.hydrophones[1] - self.hydrophones[0])
