@@ -1,1 +1,1 @@
-word = "this file is empty"
+word = "this file is empty I hate Git"
