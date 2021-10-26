@@ -129,7 +129,7 @@ assert_pico_ok(status["setChH"])
 # direction = PS4000a_RISING = 2
 # delay = 0 s
 # auto Trigger = 1000 ms
-status["trigger"] = ps.ps4000aSetSimpleTrigger(chandle, 1, 1, 10000, 2, 0,00)
+status["trigger"] = ps.ps4000aSetSimpleTrigger(chandle, 1, 1, 8200, 2, 0,00) #This sets a trigger level of 1.25V. This WILL negelect -1.25 V. Needs optimization
 assert_pico_ok(status["trigger"])
 
 # Set number of pre and post trigger samples to be collected
@@ -254,10 +254,10 @@ file_name = input("Input File Name you slimy cunt:")
 
 new_file = open(file_name,'w')
 new_file.close()
-
+titles = ["time","ChannelA","ChannelB","ChannelC","ChannelD"]
 with open(file_name,'a') as f:
     writer = csv.writer(f)
-    writer.writerow("time, channelA, channelB, channelC, channelD")
+    writer.writerow(titles)
     writer.writerow(time)
     writer.writerow(adc2mVChAMax[:])
     writer.writerow(adc2mVChBMax[:])
