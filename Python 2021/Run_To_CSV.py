@@ -81,7 +81,7 @@ titles.append("Channel B (mV)")
 
 
 # Size of capture
-sizeOfOneBuffer = 500
+sizeOfOneBuffer = 50000
 numBuffersToCapture = 1000
 
 totalSamples = sizeOfOneBuffer * numBuffersToCapture
