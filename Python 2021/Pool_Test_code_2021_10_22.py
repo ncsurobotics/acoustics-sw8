@@ -207,7 +207,7 @@ assert_pico_ok(status["setDataBuffersC"])
 status["setDataBuffersD"] = ps.ps4000aSetDataBuffers(chandle, 3, ctypes.byref(bufferDMax), ctypes.byref(bufferDMin), maxSamples, 0 , 0)
 assert_pico_ok(status["setDataBuffersD"])
 
-# create overflow loaction
+# create overflow location
 overflow = ctypes.c_int16()
 # create converted type maxSamples
 cmaxSamples = ctypes.c_int32(maxSamples)
@@ -280,4 +280,3 @@ assert_pico_ok(status["close"])
 
 # display status returns
 print(status)
-
