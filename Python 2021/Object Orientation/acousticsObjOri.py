@@ -1,3 +1,5 @@
+import math
+
 class Acoustics:
 
     def __init__(self, run_name, num_channels, delta_x, delta_z):
@@ -31,8 +33,8 @@ class Acoustics:
         cross_correlation = [0]
 
 
-        k = length(channel_one)
-        i = length(channel_two)
+        k = len(channel_one)
+        i = len(channel_two)
 
         for n in range(0, k + i - 1):
             cross_correlation[n] = 0
@@ -40,7 +42,7 @@ class Acoustics:
                 if(m + n - (k - 1) < 0):
                     cross_correlation[n] = cross_correlation[n] + 0
                 else:
-                    cross_correlation[n] = cross_correlation[n] + (channel_two[m] * channel_one[n + m - (k - 1)]
+                    cross_correlation[n] = cross_correlation[n] + (channel_two[m] * channel_one[n + m - (k - 1)])
             cross_correlation.append(0)
 
         return cross_correlation.index(max(cross_correlation))
