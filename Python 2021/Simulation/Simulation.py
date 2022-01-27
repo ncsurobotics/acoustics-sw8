@@ -1,22 +1,19 @@
 import numpy as np
 
 class Ping(object):
+    time = [0]
+    ping_values = [0]
     # time is a vector - pings are a function of time
     # end_time - length of the ping, will always start at time = 0
     # frequency - frequency of the ping, between 25000 40000
     # intensity - amplitude of the ping
     def __init__(self, end_time, frequency, intensity, sampling_period):
-        self.time = time
         self.end_time = end_time
         self.frequency = frequency
         self.intensity = intensity
         self.sampling_period = sampling_period
 
-    #setters
-
-    def set_time(self, time):
-        self.time = values
-        
+    #setters        
     def set_end_time(self, end_time):
         self.end_time = end_time
 
@@ -29,9 +26,9 @@ class Ping(object):
     def set_sampling_period(self, sampling_period):
         self.sampling_period = sampling_period
 
-    def generate_ping():
-        time = np.arange(0, self.end_time, self.sampling_period)
-        ping_values = self.intensity * np.sin(time * frequency * 2 * np.pi)
+    def generate_ping(self):
+        self.time = np.arange(0, self.end_time, self.sampling_period)
+        self.ping_values = self.intensity * np.sin(self.time * self.frequency * 2 * np.pi)
     
 class Pinger(object):
     # location is a vector - (x,y,z) coordinates of the pinger
@@ -72,5 +69,6 @@ class Hydrophone(object):
         self.received_data = received_data
 
 
-class Simulation(object):    
-    return 0
+class Simulation(object):
+    def __init__(self, place_holder):
+        self.place_holder = place_holder
