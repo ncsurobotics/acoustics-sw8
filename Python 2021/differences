@@ -1,0 +1,40 @@
+diff:
+
+from picosdk.ps2000a import ps2000a as ps                     | from picosdk.ps4000a import ps4000a as ps
+status["openunit"] = ps.ps2000aOpenUnit(ctypes.byref(chandle) | status["openunit"] = ps.ps4000aOpenUnit(ctypes.byref(chandle)
+        status["changePowerSource"] = ps.ps2000aChangePowerSo |         status["changePowerSource"] = ps.ps4000aChangePowerSo
+status["setChA"] = ps.ps2000aSetChannel(chandle, 0, 1, 1, chA | status["setChA"] = ps.ps4000aSetChannel(chandle, 0, 1, 1, chA
+status["setChB"] = ps.ps2000aSetChannel(chandle, 1, 1, 1, chB | status["setChB"] = ps.ps4000aSetChannel(chandle, 1, 1, 1, chB
+status["setChC"] = ps.ps2000aSetChannel(chandle, 2, 1, 1, chC | status["setChC"] = ps.ps4000aSetChannel(chandle, 2, 1, 1, chC
+status["setChD"] = ps.ps2000aSetChannel(chandle, 3, 1, 1, chD | status["setChD"] = ps.ps4000aSetChannel(chandle, 3, 1, 1, chD
+status["setChE"] = ps.ps2000aSetChannel(chandle, 4, 0, 1, chE | status["setChE"] = ps.ps4000aSetChannel(chandle, 4, 0, 1, chE
+status["setChF"] = ps.ps2000aSetChannel(chandle, 5, 0, 1, chF | status["setChF"] = ps.ps4000aSetChannel(chandle, 5, 0, 1, chF
+status["setChG"] = ps.ps2000aSetChannel(chandle, 6, 0, 1, chG | status["setChG"] = ps.ps4000aSetChannel(chandle, 6, 0, 1, chG
+status["setChH"] = ps.ps2000aSetChannel(chandle, 7, 0, 1, chH | status["setChH"] = ps.ps4000aSetChannel(chandle, 7, 0, 1, chH
+status["trigger"] = ps.ps2000aSetSimpleTrigger(chandle, 1, 1, | status["trigger"] = ps.ps4000aSetSimpleTrigger(chandle, 1, 1,
+status["getTimebase2"] = ps.ps2000aGetTimebase2(chandle, time | status["getTimebase2"] = ps.ps4000aGetTimebase2(chandle, time
+# lpReady = None (using ps2000aIsReady rather than ps2000aBlo | # lpReady = None (using ps4000aIsReady rather than ps4000aBlo
+status["runBlock"] = ps.ps2000aRunBlock(chandle, preTriggerSa | status["runBlock"] = ps.ps4000aRunBlock(chandle, preTriggerSa
+# Check for data collection to finish using ps2000aIsReady    | # Check for data collection to finish using ps4000aIsReady
+    status["isReady"] = ps.ps2000aIsReady(chandle, ctypes.byr |     status["isReady"] = ps.ps4000aIsReady(chandle, ctypes.byr
+status["setDataBuffersA"] = ps.ps2000aSetDataBuffers(chandle, | status["setDataBuffersA"] = ps.ps4000aSetDataBuffers(chandle,
+status["setDataBuffersB"] = ps.ps2000aSetDataBuffers(chandle, | status["setDataBuffersB"] = ps.ps4000aSetDataBuffers(chandle,
+status["setDataBuffersC"] = ps.ps2000aSetDataBuffers(chandle, | status["setDataBuffersC"] = ps.ps4000aSetDataBuffers(chandle,
+status["setDataBuffersD"] = ps.ps2000aSetDataBuffers(chandle, | status["setDataBuffersD"] = ps.ps4000aSetDataBuffers(chandle,
+status["getValues"] = ps.ps2000aGetValues(chandle, 0, ctypes. | status["getValues"] = ps.ps4000aGetValues(chandle, 0, ctypes.
+status["stop"] = ps.ps2000aStop(chandle)                      | status["stop"] = ps.ps4000aStop(chandle)
+status["close"] = ps.ps2000aCloseUnit(chandle)                | status["close"] = ps.ps4000aCloseUnit(chandle)
+
+documentation analysis:
+
+ps2000a only has channels A through D for "SetChannel"
+ps2000a has slightly different return codes for "SetSimpleTrigger"
+ps2000a has an "oversample" parameter for "GetTimebase2" and "RunBlock" that ps4000a doesn't have
+    int16_t oversample
+        oversample, not used (from GetTimebase)
+"isReady" is identical for both
+ps2000a has an "PICO_SEGMENT_OUT_OF_RANGE" return for "SetDataBuffers" that ps4000a doesn't have
+"GetValues" is identical for both
+"Stop" is identical for both
+"CloseUnit" disconnects the oscilloscope from the driver for ps4000a. "CloseUnit" shuts down the oscilloscope for ps2000a.
+    Return "PICO_USER_CALLBACK" for ps2000a that ps4000a doesn't have
