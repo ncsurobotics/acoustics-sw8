@@ -56,6 +56,7 @@ class Acoustics:
                 raise
             assert_pico_ok(self.status["changePowerSource"])
         self.open_channels()
+        self.set_trigger(1)
 
     def open_channels(self):
         ENABLED = 1
