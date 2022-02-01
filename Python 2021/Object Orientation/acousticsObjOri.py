@@ -36,6 +36,8 @@ class Acoustics:
         self.DOWNSAMPLE_RATIO = 0
         self.DOWNSAMPLE_RATIO_MODE = 0 # PS4000a_RATIO_MODE_NONE
         self.MAX_ADC = ctypes.c_int16(32767) # max ADC count value
+        self.buffer_max = (ctypes.c_int16 * self.MAX_SAMPLES)
+        self.adc_2mV_maxes = []
 
     def initialize(self):
         '''
@@ -130,19 +132,17 @@ class Acoustics:
                 0, ctypes.byref(overflow))
         assert_pico_ok(self.status["getValues"])
         # ADC counts to mV
-        adc_2mV_maxes = []
         i = self.channels.__len__()
         while i < 0:
-            adc_2mV_maxes[i] = adc2mV(buffer_max, self.RANGE, self.MAX_ADC)
+            self.adc_2mV_maxes[i] = adc2mV(self.buffer_max, self.RANGE, self.MAX_ADC)
             i -= 1
 
     def buffers(self):
-        buffer_max = (ctypes.c_int16 * self.MAX_SAMPLES)
         buffer_min = (ctypes.c_int16 * self.MAX_SAMPLES)
         i = self.channels.__len__()
         while i > 0:
             self.status["setDataBuffers" + str(i)] = ps.ps4000aSetDataBuffers(self.chandle, i, \
-                    ctypes.byref(buffer_max), ctypes.byref(buffer_min), self.MAX_SAMPLES, self.SEGMENT_INDEX, self.MODE)
+                    ctypes.byref(self.buffer_max), ctypes.byref(buffer_min), self.MAX_SAMPLES, self.SEGMENT_INDEX, self.MODE)
             assert_pico_ok(self.status["setDataBuffers" + str(i)])
             i -= 1
 
